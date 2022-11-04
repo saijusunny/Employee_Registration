@@ -13,3 +13,4 @@ class Employee(models.Model):
     salary = models.DecimalField(max_digits=8, decimal_places=2)
     datetime = models.DateTimeField(auto_now=True)
 
+    

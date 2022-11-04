@@ -75,7 +75,8 @@ from django.contrib import messages
 
 @login_required(login_url='adminlogin')
 def add_employees(request):
-    form = EmployeeForm(request.POST or None, request.FILES or None)
+    uid= User.objects.get(id=request.user.id)
+    form = EmployeeForm(request.POST or None, request.FILES or None )
     if form.is_valid():
         form.save()
 
@@ -90,6 +91,7 @@ def add_employees(request):
 
 @login_required(login_url='adminlogin')
 def edit_employees(request, id=None):
+    
     one_emp = Employee.objects.get(id=id)
     form = EmployeeForm(request.POST or None, request.FILES or None, instance=one_emp)
     if form.is_valid():
