@@ -75,8 +75,8 @@ from django.contrib import messages
 
 @login_required(login_url='adminlogin')
 def add_employees(request):
-    uid= User.objects.get(id=request.user.id)
-    EmployeeForm.instance.id=request.user.id
+    # uid= User.objects.get(id=request.user.id)
+    # EmployeeForm.instance.id=request.user.id
     form = EmployeeForm(request.POST or None, request.FILES or None )
     if form.is_valid():
         form.save()

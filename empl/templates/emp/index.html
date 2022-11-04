@@ -6,7 +6,7 @@ Employee Dashboard
 <div class="container ">
   <h2 class="text-center">Employees Dashboard</h2>
   <p class="text-center"></p>
-    <a href="{% url 'addEmp' %}" class="btn btn-info my-4">Add Employee</a>
+    <a href="{% url 'addEmp' %}" class="btn btn-info my-4" s>Add Employee</a>
   <table class="table table-dark table-hover table-bordered text-center">
     <thead>
       <tr class="bg-primary text-white ">
@@ -24,10 +24,21 @@ Employee Dashboard
       <tr>
         <td>{{ forloop.counter}}</td>
         <td><img src="{{e.pic.url}}" width="80px" height="70px" class="rounded"></td>
-        <td><a href="{% url 'oneEmp' e.id %}">{{e.name}}</a></td>
+        <td><a href="{% url 'oneEmp' e.id %}" id="vie" title="Click To View Employee Details">{{e.name}}</a></td>
           <td>{{e.salary}}</td>
-        <td><a href="{% url 'editEmp' e.id %}" class="btn btn-outline-warning">Edit</a>
-        <a href="{% url 'deleteEmp' e.id %}" class="btn btn-outline-warning">Delete</a></td>
+          <td>
+            <div class="dropdown">
+                <button class="dropbtn">Action</button>
+                <div class="dropdown-content">
+                  <a href="{% url 'editEmp' e.id %}">Edit</a>
+                  <a href="{% url 'deleteEmp' e.id %}">Delete</a>
+                  
+                </div>
+              </div>
+               
+            
+        </td>
+
       </tr>
     {% endfor %}
     {% else %}
