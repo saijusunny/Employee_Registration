@@ -50,9 +50,9 @@ def adminlogin(request):
         username = request.POST['username']
         password = request.POST['password']
         user = auth.authenticate(username=username, password=password)
-        # request.session['uid'] = user.id #visable pages using session method
+       
         if user is not None:
-            # login(request, user) #this function is login visable pages using django login session method
+            
             auth.login(request, user)
             messages.info(request, f'Welcome {username}')#pass users name to welcome page
             return redirect('allEmp')
@@ -75,36 +75,44 @@ from django.contrib import messages
 
 @login_required(login_url='adminlogin')
 def add_employees(request):
-    # uid= User.objects.get(id=request.user.id)
-    # EmployeeForm.instance.id=request.user.id
-    form = EmployeeForm(request.POST or None, request.FILES or None )
-    if form.is_valid():
-        form.save()
+    form = EmployeeForm()
+    print(request.user.id)
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST, request.FILES)
+        if form.is_valid():
+            Employee.objects.create(
+                user=request.user,
+                name=form.cleaned_data['name'],
+                pic=form.cleaned_data['pic'],
+                mobile=form.cleaned_data['mobile'],
+                email=form.cleaned_data['email'],
+                salary=form.cleaned_data['salary'],
 
-        messages.add_message(request, messages.INFO, f"Employee {form.cleaned_data.get('name')} has been added")
-        return redirect('allEmp')
-
+            )
+            messages.add_message(request, messages.INFO, f"Employee {form.cleaned_data.get('name')} has been added")
+            return redirect('allEmp')
     context = {
         'form': form,
     }
     return render(request, 'emp/addEmp.html', context)
 
-
 @login_required(login_url='adminlogin')
 def edit_employees(request, id=None):
     
-    one_emp = Employee.objects.get(id=id)
-    form = EmployeeForm(request.POST or None, request.FILES or None, instance=one_emp)
-    if form.is_valid():
-        form.save()
+    
+        one_emp = Employee.objects.get(id=id)
+        form = EmployeeForm(request.POST or None, request.FILES or None, instance=one_emp)
+        if form.is_valid():
+            form.save()
 
-        messages.add_message(request, messages.INFO, f"{form.cleaned_data.get('name')} has been added")
-        return redirect('allEmp')
+            messages.add_message(request, messages.INFO, f"{form.cleaned_data.get('name')} has been added")
+            return redirect('allEmp')
 
-    context = {
-        'form': form,
-    }
-    return render(request, 'emp/editEmp.html', context)
+        context = {
+            'form': form,
+        }
+        return render(request, 'emp/editEmp.html', context)
+    
 
 @login_required(login_url='adminlogin')
 def one_employee(request, id=None):
