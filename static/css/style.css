@@ -14,12 +14,19 @@
     color:white;
     text-underline-offset: none;
 }
-
+#signup{
+    color: orangered;
+    text-decoration: none;
+}
 #signup:hover{
     text-decoration: none;
     text-underline-offset: none;
-    color: orangered;
+    color: white;
     text-underline-offset: none; 
+    text-emphasis: none;
+    text-decoration-color: none;
+    text-emphasis-style: none;
+    
 
 }
 nav{
